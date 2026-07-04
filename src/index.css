@@ -1,6 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   padding: 20px;
+  background-color: #80bdc2;
 }
 
 .menu{
@@ -11,11 +12,17 @@ body {
 button{
   padding: 10px 20px;
   cursor: pointer;
+  color: #ffffff;
+  background-color: #202c38;
+  border-radius: 3px;
+  border: 1px solid #000000;
 }
 
 input{
   padding: 8px;
   width: 150px;
+  border-radius: 3px;
+  border: 1px solid #000000;
 }
 
 .busca-container{
@@ -27,9 +34,12 @@ input{
 
 .busca-container input{
   width: 250px;
+  display: flex;
+  gap: 10px;
 }
 
 .botoes-busca{
   display: flex;
   gap: 10px;
+  border-radius: 3px;
 }
