@@ -64,6 +64,7 @@ export default function Equipamentos() {
     <div>
       <h2>Equipamentos</h2>
 
+    <div className="formulario">
       <input
         type="text"
         placeholder="Nome"
@@ -79,7 +80,10 @@ export default function Equipamentos() {
       />
 
       <button onClick={adicionarEquipamento}>Adicionar</button>
+      </div>
 
+
+    <div className="lista-cards">
       {equipamentos.map((equipamento) => (
         <Equipamento
           key={equipamento.id}
@@ -88,6 +92,7 @@ export default function Equipamentos() {
           onDelete={() => removerEquipamento(equipamento.id)}
         />
       ))}
+      </div>
     </div>
   );
 }

@@ -66,6 +66,7 @@ function Cidades() {
 
             <h2>Gestão de Cidades</h2>
 
+            <div className="formulario">
             <input
                 type="text"
                 placeholder="Nome da cidade"
@@ -76,9 +77,11 @@ function Cidades() {
             <button onClick={cadastrar}>
                 Cadastrar
             </button>
+        </div>
 
             <hr />
 
+        <div className="lista-cards">
             {cidades.map((cidade) => (
                 <div key={cidade.id} className="card">
 
@@ -90,7 +93,7 @@ function Cidades() {
 
                 </div>
             ))}
-
+        </div>
         </div>
     );
 }

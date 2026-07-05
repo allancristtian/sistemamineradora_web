@@ -66,6 +66,7 @@ function Servicos() {
 
             <h2>Gestão de Serviços</h2>
 
+        <div className="formulario">
             <input
                 type="text"
                 placeholder="Nome do serviço"
@@ -76,9 +77,11 @@ function Servicos() {
             <button onClick={cadastrar}>
                 Cadastrar
             </button>
+            </div>
 
             <hr />
 
+        <div nameClass="lista-cards">
             {servicos.map((servico) => (
                 <div key={servico.id} className="card">
 
@@ -90,7 +93,7 @@ function Servicos() {
 
                 </div>
             ))}
-
+            </div>
         </div>
     );
 }

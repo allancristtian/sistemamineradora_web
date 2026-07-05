@@ -66,6 +66,7 @@ function Funcionarios() {
 
             <h2>Gestão de Funcionários</h2>
 
+        <div className="formulario">
             <input
                 type="text"
                 placeholder="Nome do funcionário"
@@ -76,9 +77,11 @@ function Funcionarios() {
             <button onClick={cadastrar}>
                 Cadastrar
             </button>
+            </div>
 
             <hr />
 
+        <div nameClass="lista-cards">
             {funcionarios.map((funcionario) => (
                 <div key={funcionario.id} className="card">
 
@@ -90,7 +93,7 @@ function Funcionarios() {
 
                 </div>
             ))}
-
+            </div>
         </div>
     );
 }

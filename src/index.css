@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   padding: 20px;
   background-color: #80bdc2;
 }
@@ -34,12 +34,28 @@ input{
 
 .busca-container input{
   width: 250px;
-  display: flex;
-  gap: 10px;
 }
 
 .botoes-busca{
   display: flex;
   gap: 10px;
   border-radius: 3px;
+}
+
+.lista-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.card {
+  padding: 10px;
+  margin-top: 20px;
+  min-width: 180px;
+}
+
+.formulario {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
 }
