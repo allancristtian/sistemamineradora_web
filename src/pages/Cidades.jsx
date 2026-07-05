@@ -5,6 +5,7 @@ function Cidades() {
 
     const [cidades, setCidades] = useState([]);
     const [nome, setNome] = useState("");
+    const [busca, setBusca] = useState("");
 
     useEffect(() => {
         carregarCidades();
@@ -61,39 +62,59 @@ function Cidades() {
         carregarCidades();
     }
 
+    const cidadesFiltradas = cidades.filter((cidade) =>
+        cidade.nome.toLowerCase().includes(busca.toLowerCase())
+    );
+
     return (
         <div>
 
             <h2>Gestão de Cidades</h2>
 
-            <div className="formulario">
-            <input
-                type="text"
-                placeholder="Nome da cidade"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-            />
+            <div className="formulario busca">
+                <input
+                    type="text"
+                    placeholder="Buscar cidade..."
+                    value={busca}
+                    onChange={(e) => setBusca(e.target.value)}
+                />
+            </div>
 
-            <button onClick={cadastrar}>
-                Cadastrar
-            </button>
-        </div>
+            <div className="formulario cadastro">
+                <input
+                    type="text"
+                    placeholder="Nome da cidade"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                />
+
+                <button onClick={cadastrar}>
+                    Cadastrar
+                </button>
+            </div>
 
             <hr />
 
-        <div className="lista-cards">
-            {cidades.map((cidade) => (
-                <div key={cidade.id} className="card">
+            <div className="lista-cards">
+                {cidadesFiltradas.length > 0 ? (
+                    cidadesFiltradas.map((cidade) => (
+                        <div key={cidade.id} className="card">
 
-                    <h3>{cidade.nome}</h3>
+                            <h3>{cidade.nome}</h3>
 
-                    <button onClick={() => remover(cidade.id)}>
-                        Excluir
-                    </button>
+                            <button onClick={() => remover(cidade.id)}>
+                                Excluir
+                            </button>
 
-                </div>
-            ))}
-        </div>
+                        </div>
+                    ))
+                ) : (
+                    <p style={{ textAlign: "center" }}>
+                        Nenhuma cidade encontrada
+                    </p>
+                )}
+            </div>
+
         </div>
     );
 }

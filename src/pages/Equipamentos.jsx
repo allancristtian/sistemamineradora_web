@@ -3,9 +3,11 @@ import supabase from "../services/supabase";
 import Equipamento from "../components/Equipamento";
 
 export default function Equipamentos() {
+
   const [equipamentos, setEquipamentos] = useState([]);
   const [nome, setNome] = useState("");
   const [setor, setSetor] = useState("");
+  const [busca, setBusca] = useState("");
 
   useEffect(() => {
     buscarEquipamentos();
@@ -24,6 +26,7 @@ export default function Equipamentos() {
   };
 
   const adicionarEquipamento = async () => {
+
     if (!nome || !setor) {
       alert("Preencha todos os campos!");
       return;
@@ -40,14 +43,16 @@ export default function Equipamentos() {
 
     if (error) {
       console.log("Erro ao adicionar:", error.message);
-    } else {
-      setNome("");
-      setSetor("");
-      buscarEquipamentos();
+      return;
     }
+
+    setNome("");
+    setSetor("");
+    buscarEquipamentos();
   };
 
   const removerEquipamento = async (id) => {
+
     const { error } = await supabase
       .from("equipamentos")
       .delete()
@@ -55,44 +60,72 @@ export default function Equipamentos() {
 
     if (error) {
       console.log("Erro ao remover:", error.message);
-    } else {
-      buscarEquipamentos();
+      return;
     }
+
+    buscarEquipamentos();
   };
+
+  const equipamentosFiltrados = equipamentos.filter((eq) =>
+    eq.nome.toLowerCase().includes(busca.toLowerCase()) ||
+    eq.setor.toLowerCase().includes(busca.toLowerCase())
+  );
 
   return (
     <div>
+
       <h2>Equipamentos</h2>
 
-    <div className="formulario">
-      <input
-        type="text"
-        placeholder="Nome"
-        value={nome}
-        onChange={(e) => setNome(e.target.value)}
-      />
-
-      <input
-        type="text"
-        placeholder="Setor"
-        value={setor}
-        onChange={(e) => setSetor(e.target.value)}
-      />
-
-      <button onClick={adicionarEquipamento}>Adicionar</button>
-      </div>
-
-
-    <div className="lista-cards">
-      {equipamentos.map((equipamento) => (
-        <Equipamento
-          key={equipamento.id}
-          nome={equipamento.nome}
-          setor={equipamento.setor}
-          onDelete={() => removerEquipamento(equipamento.id)}
+      <div className="formulario busca">
+        <input
+          type="text"
+          placeholder="Buscar equipamento..."
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
         />
-      ))}
       </div>
+
+      <div className="formulario cadastro">
+
+        <input
+          type="text"
+          placeholder="Nome"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+        />
+
+        <input
+          type="text"
+          placeholder="Setor"
+          value={setor}
+          onChange={(e) => setSetor(e.target.value)}
+        />
+
+        <button onClick={adicionarEquipamento}>
+          Adicionar
+        </button>
+
+      </div>
+
+      <hr />
+
+      <div className="lista-cards">
+        {equipamentosFiltrados.length > 0 ? (
+          equipamentosFiltrados.map((equipamento) => (
+            <Equipamento
+              key={equipamento.id}
+              nome={equipamento.nome}
+              setor={equipamento.setor}
+              onDelete={() => removerEquipamento(equipamento.id)}
+            />
+          ))
+        ) : (
+          <p style={{ textAlign: "center" }}>
+            Nenhum equipamento encontrado
+          </p>
+        )}
+      </div>
+
     </div>
   );
 }

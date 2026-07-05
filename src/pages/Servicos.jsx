@@ -5,6 +5,7 @@ function Servicos() {
 
     const [servicos, setServicos] = useState([]);
     const [nome, setNome] = useState("");
+    const [busca, setBusca] = useState("");
 
     useEffect(() => {
         carregarServicos();
@@ -61,39 +62,61 @@ function Servicos() {
         carregarServicos();
     }
 
+    const servicosFiltrados = servicos.filter((servico) =>
+        servico.nome.toLowerCase().includes(busca.toLowerCase())
+    );
+
     return (
         <div>
 
             <h2>Gestão de Serviços</h2>
 
-        <div className="formulario">
-            <input
-                type="text"
-                placeholder="Nome do serviço"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-            />
+            <div className="formulario busca">
+                <input
+                    type="text"
+                    placeholder="Buscar serviço..."
+                    value={busca}
+                    onChange={(e) => setBusca(e.target.value)}
+                />
+            </div>
 
-            <button onClick={cadastrar}>
-                Cadastrar
-            </button>
+            <div className="formulario cadastro">
+
+                <input
+                    type="text"
+                    placeholder="Nome do serviço"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                />
+
+                <button onClick={cadastrar}>
+                    Cadastrar
+                </button>
+
             </div>
 
             <hr />
 
-        <div nameClass="lista-cards">
-            {servicos.map((servico) => (
-                <div key={servico.id} className="card">
+            <div className="lista-cards">
+                {servicosFiltrados.length > 0 ? (
+                    servicosFiltrados.map((servico) => (
+                        <div key={servico.id} className="card">
 
-                    <h3>{servico.nome}</h3>
+                            <h3>{servico.nome}</h3>
 
-                    <button onClick={() => remover(servico.id)}>
-                        Excluir
-                    </button>
+                            <button onClick={() => remover(servico.id)}>
+                                Excluir
+                            </button>
 
-                </div>
-            ))}
+                        </div>
+                    ))
+                ) : (
+                    <p style={{ textAlign: "center" }}>
+                        Nenhum serviço encontrado
+                    </p>
+                )}
             </div>
+
         </div>
     );
 }
